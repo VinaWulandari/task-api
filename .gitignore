@@ -1,4 +1,21 @@
 # Ignore environment config
+
+# Golang build files
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+/bin/
+/obj/
+/build/
+
+# Vendor
+/vendor/
+
+# Local environment config
 .env
+
+# Local sqlite / test db
 *.db
 tasks.db
