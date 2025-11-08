@@ -15,6 +15,17 @@ import (
 
 var SecretKey = []byte(os.Getenv("JWT_SECRET")) // ganti nanti ya 🔐
 
+// RegisterUser godoc
+// @Summary Register new user
+// @Description Create a new user account
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.User true "User data"
+// @Success 201 {object} models.User
+// @Failure 400 {object} map[string]string
+// @Router /api/register [post]
+
 func Register(c *gin.Context) {
 	var input struct {
 		Username string `json:"username"`
@@ -42,6 +53,17 @@ func Register(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{"message": "User registered successfully"})
 }
+
+// LoginUser godoc
+// @Summary Login user
+// @Description Login to get JWT token
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.User true "Login credentials"
+// @Success 200 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Router /api/login [post]
 
 func Login(c *gin.Context) {
 	var input struct {
