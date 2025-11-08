@@ -9,7 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// CREATE TASK
+// CreateTask godoc
+// @Summary Create new task
+// @Description Create task for logged in user
+// @Tags Tasks
+// @Security BearerAuth
+// @Accept json
+// @Produce json
+// @Param task body models.Task true "Task data"
+// @Success 201 {object} models.Task
+// @Failure 400 {object} map[string]string
+// @Router /api/tasks [post]
 func CreateTask(c *gin.Context) {
 	userID := c.GetUint("user_id") // ✅ Ambil user_id dari token
 
@@ -35,7 +45,6 @@ func CreateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, task)
 }
 
-// GET ALL TASKS OF LOGGED USER
 func GetTasks(c *gin.Context) {
 	userID := c.GetUint("user_id")
 
@@ -45,7 +54,14 @@ func GetTasks(c *gin.Context) {
 	c.JSON(http.StatusOK, tasks)
 }
 
-// GET TASK BY ID (must belong to user)
+// GetTasks godoc
+// @Summary Get user tasks
+// @Description Get all tasks of logged in user
+// @Tags Tasks
+// @Security BearerAuth
+// @Produce json
+// @Success 200 {array} models.Task
+// @Router /api/tasks [get]
 func GetTask(c *gin.Context) {
 	userID := c.GetUint("user_id")
 	id := c.Param("id")
@@ -59,7 +75,16 @@ func GetTask(c *gin.Context) {
 	c.JSON(http.StatusOK, task)
 }
 
-// UPDATE TASK (only if belongs to user)
+// UpdateTask godoc
+// @Summary Update a task
+// @Description Update task by ID
+// @Tags Tasks
+// @Security BearerAuth
+// @Param id path int true "Task ID"
+// @Param task body models.Task true "Updated task"
+// @Success 200 {object} models.Task
+// @Failure 404 {object} map[string]string
+// @Router /api/tasks/{id} [put]
 func UpdateTask(c *gin.Context) {
 	userID := c.GetUint("user_id")
 	id := c.Param("id")
@@ -79,7 +104,15 @@ func UpdateTask(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Task updated", "task": task})
 }
 
-// DELETE TASK (only if belongs to user)
+// DeleteTask godoc
+// @Summary Delete task
+// @Description Remove task by ID
+// @Tags Tasks
+// @Security BearerAuth
+// @Param id path int true "Task ID"
+// @Success 200 {object} map[string]string
+// @Failure 404 {object} map[string]string
+// @Router /api/tasks/{id} [delete]
 func DeleteTask(c *gin.Context) {
 	userID := c.GetUint("user_id")
 	id := c.Param("id")
