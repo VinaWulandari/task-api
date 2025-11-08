@@ -1,0 +1,4 @@
+# Ignore environment config
+.env
+*.db
+tasks.db
